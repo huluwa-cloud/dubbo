@@ -107,8 +107,14 @@ public class HashedWheelTimer implements Timer {
      */
     @SuppressWarnings({"unused", "FieldMayBeFinal"})
     private volatile int workerState;
-
+    /**
+     * 刻度
+     */
     private final long tickDuration;
+    /**
+     * 时间轮数据结构。
+     * 每个桶都是一个双向链表
+     */
     private final HashedWheelBucket[] wheel;
     private final int mask;
     private final CountDownLatch startTimeInitialized = new CountDownLatch(1);
@@ -688,6 +694,9 @@ public class HashedWheelTimer implements Timer {
     }
 
     /**
+     *
+     * 桶的数据结构是一个链表
+     *
      * Bucket that stores HashedWheelTimeouts. These are stored in a linked-list like datastructure to allow easy
      * removal of HashedWheelTimeouts in the middle. Also the HashedWheelTimeout act as nodes themself and so no
      * extra object creation is needed.
